@@ -2,86 +2,126 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Çentikli ekranlar için -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title>Future City - AR Digital Book</title>
   <style>
+    :root {
+      /* Kart oranı: poster dikey hissi (ihtiyaca göre değiştirin) */
+      --page-ratio: 3 / 4;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
       background-color: #f2f2f2;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      /* svh: adres çubuğu değişimlerinden etkilenmez */
+      min-height: 100svh;
       font-family: sans-serif;
+      overflow: hidden;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
     }
+
     .book {
       display: flex;
       width: 100vw;
-      height: 90vh;
+      /* Tam yükseklik yerine güvenli yükseklik */
+      height: 92svh;
+      /* Dikey taşmayı kapat, yatay kaydır */
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       align-items: center;
       justify-content: flex-start;
-      padding: 10px;
+      /* padding yerine gap kullan ki toplam genişlik şişmesin */
+      padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right);
+      gap: 12px;
+      /* iOS Safari’de lastik kaydırmayı azaltır */
+      -webkit-overflow-scrolling: touch;
     }
+
     .page {
-      flex: 0 0 100%;
-      max-width: 400px;
-      height: 100%;
-      background-size: cover;
+      /* Ekrana göre esneyen genişlik: min 280px, çoğu telefonda ~90vw, masaüstünde 420px’i geçmez */
+      flex: 0 0 clamp(280px, 90vw, 420px);
+      /* Yükseklik: ekranın %85’i ile 760px arası */
+      height: clamp(420px, 85svh, 760px);
+      /* Oranı sabitle, yükseklik-görsel uyumu */
+      aspect-ratio: var(--page-ratio);
+      background-size: cover;           /* Kırpmayı istemezseniz 'contain' yapın */
       background-position: center;
       background-color: white;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
       position: relative;
-      scroll-snap-align: start;
-      margin: 0 10px;
+      scroll-snap-align: center;
+      /* İçerik taşarsa gizle */
+      overflow: hidden;
     }
+
     .ar-link {
       position: absolute;
-      bottom: 16px;
-      right: 16px;
-      padding: 10px 16px;
+      bottom: 12px;
+      right: 12px;
+      padding: 8px 12px;
       background: rgba(0, 0, 0, 0.7);
       color: white;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* Küçük ekranlara biraz daha sıkı düzen */
+    @media (max-width: 420px) {
+      .book { height: 94svh; }
+      .page {
+        flex-basis: 92vw;
+        border-radius: 12px;
+      }
+    }
+
+    /* Masaüstünde sayfaları biraz genişlet */
+    @media (min-width: 1024px) {
+      .page {
+        flex-basis: 400px;
+        height: 85vh; /* masaüstünde klasik vh uygun */
+      }
     }
   </style>
 </head>
 <body>
   <div class="book">
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/1.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/2.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/3.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/4.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/5.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/6.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/7.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/8.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/9.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
     <div class="page" style="background-image: url('https://raw.githubusercontent.com/harunikiz/denemekitap/main/10.png');">
-      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank">AR ile Gör</a>
+      <a class="ar-link" href="https://fv2spf.csb.app/" target="_blank" rel="noopener">AR ile Gör</a>
     </div>
   </div>
 </body>
